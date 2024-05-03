@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
@@ -56,6 +57,9 @@ class MainActivity : AppCompatActivity() {
 
         val result = detector.process(image)
             .addOnSuccessListener {faces->
+                var adapter = ImageAdapter(this,faces)
+                binding.rvFaces.adapter = adapter
+                binding.rvFaces.layoutManager = LinearLayoutManager(this)
                 binding.btn.text = faces.size.toString()
             }
             .addOnFailureListener{e->
